@@ -1,0 +1,8 @@
+# ignore files
+*.suo
+
+# ignore folders
+bin
+obj
+packages
+.vs

@@ -1,11 +1,11 @@
-﻿namespace DutyManager.MainObjects
+﻿namespace DutyFramework.Interfaces
 {
     public interface IDutyConnection
     {
         IDuty DutyA { get; set; }
         IDuty DutyB { get; set; }
         ConnectionDirection Direction { get; set; }
-        ITextBlock Description { get; set; }
+        string Description { get; set; }
     }
 
     public enum ConnectionDirection

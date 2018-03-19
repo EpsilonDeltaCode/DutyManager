@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using DutyManager.MainObjects;
+using DutyFramework.Implementations;
+using DutyFramework.Interfaces;
 using DutyManager.ViewModel;
 
 namespace DutyManager
@@ -21,36 +23,64 @@ namespace DutyManager
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private readonly MainViewModel currentViewModel;
+        
+
         public MainWindow()
         {
             InitializeComponent();
-            currentViewModel = new MainViewModel(this);
 
-            // DataBinding (Begin)
-            ;
+            CurrentMainViewModel = new MainViewModel();
+            CurrentDataManager = new DataManager(CurrentMainViewModel);
+            CurrentDataManager.Setup();
 
+            TimeManagementGrid.DataContext = CurrentMainViewModel.CurrentTimeManagementViewModel;
+            RemindersGrid.DataContext = CurrentMainViewModel.CurrentReminderViewModel;
+            ConnectionsGrid.DataContext = CurrentMainViewModel.CurrentConnectionsViewModel;
 
-            // DataBinding (End)
-
-            // Test Area
-
-            currentViewModel.Duties.Add(new DummyDuty(){ Titel = "Dummy 1 Titel"});
-            currentViewModel.Duties.Add(new DummyDuty() { Titel = "Dummy 2 Titel" });
+            DutyListGrid.DataContext = CurrentMainViewModel;
+            //DutyListBox.DataContext = CurrentMainViewModel;
+            DutyListBox.SelectionChanged += CurrentMainViewModel.OnDutyListBoxSelectionChange;
         }
+
+        public MainViewModel CurrentMainViewModel { get; set; }
+
+        public DataManager CurrentDataManager { get; set; }
+
+
+
+
+
 
         // Event Handling (Begin)
 
-        private void OnDutyListBoxItemSelected(object sender, SelectionChangedEventArgs e)
+
+        /*
+        private void OnDutyListBoxSelectionChange(object sender, SelectionChangedEventArgs e)
         {
             var selectedDuty = e.AddedItems[0] as IDuty;
-            currentViewModel.ChangeCurrentDuty(selectedDuty);
+            CurrentMainViewModel.CurrentDuty = selectedDuty;
         }
+
+
+            SelectionChanged="OnDutyListBoxSelectionChange"
+
+        */
+
+
         // Event Handling (End)
         private void TestButton_OnClick(object sender, RoutedEventArgs e)
         {
+            CurrentMainViewModel.MainDutyList.Add(new DummyDuty("ButtonAddedDuty"));
+            Debug.WriteLine("Button Clicked");
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

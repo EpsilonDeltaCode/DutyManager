@@ -28,6 +28,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,10 +51,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SQLite.CodeFirst, Version=1.5.1.25, Culture=neutral, PublicKeyToken=eb96ba0a78d831a7, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLite.CodeFirst.1.5.1.25\lib\net45\SQLite.CodeFirst.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
@@ -91,11 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataManager.cs" />
     <Compile Include="ViewModel\ConnectionsViewModel.cs" />
-    <Compile Include="MainObjects\DefaultDuty.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ReminderViewModel.cs" />
-    <Compile Include="MainObjects\SingleLineTextBlock.cs" />
     <Compile Include="ViewModel\TimeManagementViewModel.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />
     <Page Include="MainWindow.xaml">
@@ -106,17 +117,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainObjects\DummyDuty.cs" />
-    <Compile Include="MainObjects\IDescribingStatement.cs" />
-    <Compile Include="MainObjects\IDuty.cs" />
-    <Compile Include="MainObjects\IDutyConnection.cs" />
-    <Compile Include="MainObjects\ITextBlock.cs" />
-    <Compile Include="MainObjects\IUrlStatement.cs" />
-    <Compile Include="MainObjects\IReminder.cs" />
-    <Compile Include="MainObjects\IStatus.cs" />
-    <Compile Include="MainObjects\IStatement.cs" />
-    <Compile Include="MainObjects\DescribingStatement.cs" />
-    <Compile Include="MainObjects\NoDescriptionStatus.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -161,5 +161,16 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataBaseConnection\DataBaseConnection.csproj">
+      <Project>{1fb4a1dd-7432-4f05-8c6b-5b1830367ce8}</Project>
+      <Name>DataBaseConnection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DutyFramework\DutyFramework.csproj">
+      <Project>{0c369eae-7056-477b-9bc6-68187ecff5ac}</Project>
+      <Name>DutyFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

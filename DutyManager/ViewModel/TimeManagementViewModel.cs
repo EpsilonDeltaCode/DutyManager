@@ -4,7 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DutyManager.MainObjects;
+using DutyFramework.Implementations;
+using DutyFramework.Interfaces;
 
 namespace DutyManager.ViewModel
 {
@@ -12,9 +13,9 @@ namespace DutyManager.ViewModel
     {
         private IDuty _currentDuty;
 
-        public TimeManagementViewModel(IDuty currentDuty)
+        public TimeManagementViewModel()
         {
-            CurrentDuty = currentDuty;
+            
         }
 
         public IDuty CurrentDuty
@@ -23,11 +24,7 @@ namespace DutyManager.ViewModel
             set
             {
                 _currentDuty = value;
-                OnPropertyChanged(nameof(DeadLineDateTime));
-                OnPropertyChanged(nameof(LastChangeDateTime));
-                OnPropertyChanged(nameof(StatusProgressText));
-                OnPropertyChanged(nameof(StatusProgress));
-                OnPropertyChanged(nameof(StatusDescription));
+                OnCurrentDutyChange();
             }
         }
 
@@ -61,10 +58,10 @@ namespace DutyManager.ViewModel
 
         public int StatusProgress
         {
-            get => CurrentDuty.CurrentStatus.Progress;
+            get => CurrentDuty.Progress;
             set
             {
-                CurrentDuty.CurrentStatus.Progress = value;
+                CurrentDuty.Progress = value;
                 OnPropertyChanged(nameof(StatusProgressText));
                 OnPropertyChanged(nameof(StatusProgress));
             }
@@ -72,7 +69,7 @@ namespace DutyManager.ViewModel
 
         public string StatusProgressText
         {
-            get => CurrentDuty.CurrentStatus.Progress.ToString();
+            get => CurrentDuty.Progress.ToString();
             set
             {
                 if (int.TryParse(value, out int newProgress))
@@ -89,14 +86,22 @@ namespace DutyManager.ViewModel
 
         public string StatusDescription
         {
-            get => CurrentDuty.CurrentStatus.Description.ToSingleLine();
+            get => CurrentDuty.ProgressDescription;
             set
             {
-                CurrentDuty.CurrentStatus.Description = new SingleLineTextBlock(value);
+                CurrentDuty.ProgressDescription = value;
                 OnPropertyChanged(nameof(StatusDescription));
             }
         }
 
+        public void OnCurrentDutyChange()
+        {
+            OnPropertyChanged(nameof(DeadLineDateTime));
+            OnPropertyChanged(nameof(LastChangeDateTime));
+            OnPropertyChanged(nameof(StatusProgressText));
+            OnPropertyChanged(nameof(StatusProgress));
+            OnPropertyChanged(nameof(StatusDescription));
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -162,6 +162,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Visual Studio 2017\Projects\MiniLogger\MiniLogger\MiniLogger.csproj">
+      <Project>{acfe9ed7-4639-4dff-97c5-54153c608fe8}</Project>
+      <Name>MiniLogger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataBaseConnection\DataBaseConnection.csproj">
       <Project>{1fb4a1dd-7432-4f05-8c6b-5b1830367ce8}</Project>
       <Name>DataBaseConnection</Name>

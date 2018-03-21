@@ -54,14 +54,14 @@
                         <TabItem Header="Time Management">
                             <Grid Name="TimeManagementGrid">
                                 <Label Content="Deadline:"  Margin="10,8,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <xctk:DateTimePicker Name="DeadLineDateTimePicker" Value="{Binding Path=DeadLineDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="74,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" ></xctk:DateTimePicker>
+                                <xctk:DateTimePicker Name="DeadLineDateTimePicker" Value="{Binding Path=DeadLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="74,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" ></xctk:DateTimePicker>
                                 <Label Content="Last Change:"  Margin="336,8,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False"/>
-                                <xctk:DateTimePicker Name="LastChangeDateTimePicker" Value="{Binding Path=LastChangeDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="413,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" IsEnabled="False"></xctk:DateTimePicker>
+                                <xctk:DateTimePicker Name="LastChangeDateTimePicker" Value="{Binding Path=LastChange, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="413,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" IsEnabled="False"></xctk:DateTimePicker>
                                 <Label Content="Status:"  Margin="10,39,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <ProgressBar Name="StatusProgressBar" Value="{Binding Path=StatusProgress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="74,39,0,0" VerticalAlignment="Top" Width="100"/>
-                                <TextBox Name="StatusProgressTextBox" Text="{Binding Path=StatusProgressText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="179,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30"/>
-                                <Label Content="%" HorizontalAlignment="Left" Margin="208,39,0,0" VerticalAlignment="Top"/>
-                                <TextBox Name="StatusDescriptionTextBox" Text="{Binding Path=StatusDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="233,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="420"/>
+                                <ProgressBar Name="StatusProgressBar" Value="{Binding Path=Progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="74,39,0,0" VerticalAlignment="Top" Width="100"/>
+                                <TextBox Name="StatusProgressTextBox" Text="{Binding Path=ProgressText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="179,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30"/>
+                                <Label Content="%" HorizontalAlignment="Left" Margin="206,39,0,0" VerticalAlignment="Top"/>
+                                <TextBox Name="StatusDescriptionTextBox" Text="{Binding Path=ProgressDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="233,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="420"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="Reminders">

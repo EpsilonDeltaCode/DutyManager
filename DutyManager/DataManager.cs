@@ -27,11 +27,11 @@ namespace DutyManager
             {
                 Duty dutyA = new Duty()
                 {
-                    Titel = "TestDuty - Lauf3 - " + i,
+                    Titel = "TestDuty - run 1." + i,
                     Connections = new List<IDutyConnection>(),
                     Created = DateTime.Now,
-                    Progress = 22,
-                    ProgressDescription = "TestDutyStatusDescription1",
+                    Progress = i,
+                    ProgressDescription = "TestDutyStatusDescription of run 1." + i,
                     DeadLine = DateTime.MaxValue,
                     Id = Guid.NewGuid(),
                     LastChange = DateTime.Now,

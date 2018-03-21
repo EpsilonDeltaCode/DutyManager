@@ -14,5 +14,10 @@ namespace DutyManager.ViewModel
         {
             throw new NotImplementedException();
         }
+
+        public void Setup()
+        {
+
+        }
     }
 }

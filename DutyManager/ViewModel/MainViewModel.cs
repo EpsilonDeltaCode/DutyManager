@@ -16,28 +16,14 @@ namespace DutyManager.ViewModel
 {
     public class MainViewModel : IViewModel
     {
-        private IDuty _currentDuty;
+        private Duty _currentlySelectedDuty;
 
         public MainViewModel()
         {
-            Setup();
             MainDutyList = new ObservableCollection<IDuty>();
-            CurrentDuty = new DefaultDuty();
         }
 
         public ObservableCollection<IDuty> MainDutyList { get; set; }
-
-        public IDuty CurrentDuty
-        {
-            get => _currentDuty;
-            set
-            {
-                _currentDuty = value;
-                CurrentTimeManagementViewModel.CurrentDuty = value;
-                //CurrentReminderViewModel.CurrentDuty = value;
-                //CurrentConnectionsViewModel.CurrentDuty = value;
-            }
-        }
 
         public TimeManagementViewModel CurrentTimeManagementViewModel { get; set; }
 
@@ -48,7 +34,7 @@ namespace DutyManager.ViewModel
 
         public void OnDutyListBoxSelectionChange(object sender, SelectionChangedEventArgs e)
         {
-            CurrentDuty = e.AddedItems[0] as IDuty;
+            _currentlySelectedDuty = e.AddedItems[0] as Duty;
         }
 
 
@@ -64,8 +50,11 @@ namespace DutyManager.ViewModel
         public void Setup()
         {
             CurrentTimeManagementViewModel = new TimeManagementViewModel();
+            CurrentTimeManagementViewModel.Setup();
             CurrentReminderViewModel = new ReminderViewModel();
+            CurrentReminderViewModel.Setup();
             CurrentConnectionsViewModel = new ConnectionsViewModel();
+            CurrentConnectionsViewModel.Setup();
         }
     }
 }

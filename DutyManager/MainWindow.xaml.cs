@@ -31,7 +31,10 @@ namespace DutyManager
         {
             InitializeComponent();
 
+            MiniLogger.LoggerWindow.ShowWindow();
+
             CurrentMainViewModel = new MainViewModel();
+            CurrentMainViewModel.Setup();
             CurrentDataManager = new DataManager(CurrentMainViewModel);
             CurrentDataManager.Setup();
 
@@ -42,6 +45,7 @@ namespace DutyManager
             DutyListGrid.DataContext = CurrentMainViewModel;
             //DutyListBox.DataContext = CurrentMainViewModel;
             DutyListBox.SelectionChanged += CurrentMainViewModel.OnDutyListBoxSelectionChange;
+            DutyListBox.SelectionChanged += CurrentMainViewModel.CurrentTimeManagementViewModel.OnDutyListBoxSelectionChange;
         }
 
         public MainViewModel CurrentMainViewModel { get; set; }

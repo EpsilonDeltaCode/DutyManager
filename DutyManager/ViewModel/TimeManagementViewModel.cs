@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using DutyFramework.Implementations;
 using DutyFramework.Interfaces;
 
@@ -11,96 +13,94 @@ namespace DutyManager.ViewModel
 {
     public class TimeManagementViewModel : IViewModel
     {
-        private IDuty _currentDuty;
+        private DateTime? _deadLine;
+        private DateTime? _lastChange;
+        private string _progressDescription;
 
         public TimeManagementViewModel()
         {
             
         }
 
-        public IDuty CurrentDuty
+        public DateTime? DeadLine
         {
-            get => _currentDuty;
-            set
-            {
-                _currentDuty = value;
-                OnCurrentDutyChange();
-            }
-        }
-
-        public DateTime? DeadLineDateTime
-        {
-            get => CurrentDuty.DeadLine;
+            get => _deadLine;
             set
             {
                 if (value != null)
-                {
-                    CurrentDuty.DeadLine = value.Value;
-                }
-
-                OnPropertyChanged(nameof(DeadLineDateTime));
+                    _deadLine = value.Value;
+                else
+                    MiniLogger.LoggerWindow.AddEntry("Error", "Try to set local DeadLine with a value=null");
+                
+                OnPropertyChanged(nameof(DeadLine));
             }
         }
 
-        public DateTime? LastChangeDateTime
+        public DateTime? LastChange
         {
-            get => CurrentDuty.LastChange;
-            set
+            get => _lastChange;
+            private set
             {
                 if (value != null)
-                {
-                    CurrentDuty.LastChange = value.Value;
-                }
+                    _lastChange = value.Value;
+                else
+                    MiniLogger.LoggerWindow.AddEntry("Error", "Try to set local LastChange with a value=null");
 
-                OnPropertyChanged(nameof(LastChangeDateTime));
+                OnPropertyChanged(nameof(LastChange));
             }
         }
 
-        public int StatusProgress
-        {
-            get => CurrentDuty.Progress;
-            set
-            {
-                CurrentDuty.Progress = value;
-                OnPropertyChanged(nameof(StatusProgressText));
-                OnPropertyChanged(nameof(StatusProgress));
-            }
-        }
+        public int Progress { get; private set; }
 
-        public string StatusProgressText
+        public string ProgressText
         {
-            get => CurrentDuty.Progress.ToString();
+            get => Progress.ToString();
             set
             {
                 if (int.TryParse(value, out int newProgress))
                 {
                     if (newProgress >= 0 && newProgress <= 100)
                     {
-                        StatusProgress = newProgress;
+                        Progress = newProgress;
                     }
                 }
-                OnPropertyChanged(nameof(StatusProgressText));
-                OnPropertyChanged(nameof(StatusProgress));
+                OnPropertyChanged(nameof(ProgressText));
+                OnPropertyChanged(nameof(Progress));
             }
         }
 
-        public string StatusDescription
+        public string ProgressDescription
         {
-            get => CurrentDuty.ProgressDescription;
+            get => _progressDescription;
             set
             {
-                CurrentDuty.ProgressDescription = value;
-                OnPropertyChanged(nameof(StatusDescription));
+                _progressDescription = value;
+                OnPropertyChanged(nameof(ProgressDescription));
             }
         }
 
-        public void OnCurrentDutyChange()
+        public void Setup()
         {
-            OnPropertyChanged(nameof(DeadLineDateTime));
-            OnPropertyChanged(nameof(LastChangeDateTime));
-            OnPropertyChanged(nameof(StatusProgressText));
-            OnPropertyChanged(nameof(StatusProgress));
-            OnPropertyChanged(nameof(StatusDescription));
+            DeadLine = DateTime.Now;
+            LastChange = DateTime.Now;
+            ProgressText = "";
+            ProgressDescription = "";
+        }
+
+
+        public void OnDutyListBoxSelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems[0] is Duty selectedDuty)
+            {
+                DeadLine = selectedDuty.DeadLine;
+                LastChange = selectedDuty.LastChange;
+                ProgressText = selectedDuty.Progress.ToString();
+                ProgressDescription = selectedDuty.ProgressDescription;
+            }
+            else
+            {
+                MiniLogger.LoggerWindow.AddEntry("Error", "Try to set local Properties from \"SelectionChangedEventArgs.AddedItems[0] as Duty\"=null");
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
